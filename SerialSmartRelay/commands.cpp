@@ -96,11 +96,10 @@ void commands_setupSerial(const char* param, CommandResultCallback callback) {
 void commands_setRelayOn(const char* param, CommandResultCallback callback) {
   int channel = (param != NULL) ? atoi(param) : 0;
 
-  if (NEED_SERIAL_RESET_BEFORE_ON_OFF)
-    resetSerial();
+  if (NEED_SERIAL_RESET_BEFORE_ON_OFF) resetSerial();
 
   if (channel == 0) {
-    uint8_t count = RELAY_CHANNELS_COUNT;  //relay.getChannelsCount();
+    uint8_t count = relay.getChannelsCount();
     for (uint8_t i = 0; i < count; i++) {
       relay.setOn(i);
     }
@@ -116,11 +115,10 @@ void commands_setRelayOn(const char* param, CommandResultCallback callback) {
 void commands_setRelayOff(const char* param, CommandResultCallback callback) {
   uint8_t channel = (param != NULL) ? atoi(param) : 0;
 
-  if (NEED_SERIAL_RESET_BEFORE_ON_OFF)
-    resetSerial();
+  if (NEED_SERIAL_RESET_BEFORE_ON_OFF) resetSerial();
 
   if (channel == 0) {
-    int count = RELAY_CHANNELS_COUNT;  // relay.getChannelsCount();
+    int count = relay.getChannelsCount();
     for (uint8_t i = 0; i < count; i++) {
       relay.setOff(i);
     }
