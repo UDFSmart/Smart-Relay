@@ -1,6 +1,6 @@
 # SerialSmartRelay
 
-**SerialSmartRelay** is a firmware source code for controlling a smart relay via a serial interface (UART) using the A0 protocol.
+**[SerialSmartRelay](https://github.com/UDFSmart/Smart-Relay/tree/main/SerialSmartRelay)** is a firmware source code for controlling a smart relay via a serial interface (UART) using the A0 protocol.
 
 ## Supported devices
 
