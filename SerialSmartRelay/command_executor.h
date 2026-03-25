@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 UDFOwner
+ *    Copyright 2026 UDFOwner
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,14 +17,16 @@
  */
 
 #pragma once
+// #include "commands.h"
+#include "network_utils.h"
 
-#include <cstdint>
-#include <cstddef>
+#include <UCommandExecutor.h>
 
-void sanitizePath(char* s);
+const unsigned long DEFAULT_POLL_INTERVAL = 15000;
 
-bool parseMessageСommandParam(const char* param, char* message, size_t messageSize, uint32_t* durationMs);
+extern unsigned long lastPoll;
+extern unsigned long pollInterval;
 
-void cleanNonAsciiSpaces(char* str);
+void command_executor_handleCommandRequest(const HttpHeader* headers, size_t headersCount, CommandResultCallback onResultFunc);
 
-bool tryParseInt(const char* str, int& result);
+

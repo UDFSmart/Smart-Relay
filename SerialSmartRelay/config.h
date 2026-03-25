@@ -17,13 +17,16 @@
  */
 
 #pragma once
-#include <Arduino.h>
+#include <string.h>
 
 #define DEVICE_ID "xxxx-xxxx-xxxx-xxxx"  // YOUR DEVICE ID, to get it write to us: support@udfsoft.com
-#define DEVICE_TYPE "esp-01 relay x2"    // type of your device
+#define DEVICE_TYPE "SerialRelay"        // type of your device
 #define DEVICE_CONTROLLER_TYPE "esp-01"
-#define API_KEY "xxxxxxxxxxxxxxxxxxxxx"  // YOUR API Key, to get it write to us: support@udfsoft.com
+#define API_KEY "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  // YOUR API Key, to get it write to us: support@udfsoft.com
 
 #define APP_VERSION "1"
+
+#define RELAY_CHANNELS_COUNT 2                // The number of modular relay channels is set here.
+#define NEED_SERIAL_RESET_BEFORE_ON_OFF true  // Sometimes the module does not accept commands and only reinitializing the serial interface helps.
 
 static const uint8_t customMAC[] = { 0xAC, 0x00, 0x00, 0x00, 0x00, 0x00 };  // If you don't have a default in your esp, then set your MAC

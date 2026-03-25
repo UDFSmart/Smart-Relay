@@ -23,17 +23,24 @@
 #include "config.h"
 
 #include "network_utils.h"
-#include "string_utils.h"
+
+#include "commands.h"
 #include "command_executor.h"
 
-#include "RelayController.h"
-
 void setup() {
-  Serial.begin(115200);
-  
+
   network_utils_SetupNetwork();
+  yield();
 
   commands_setup();
+  yield();
+
+  commands_setRelayOn(1); // We send a relay start for one second - status: connected to the access point!
+
+  delay(1000);
+  yield();
+
+  commands_setRelayOff(1);
 }
 
 void loop() {
@@ -71,6 +78,13 @@ void pollServer() {
         break;
       case HTTP_CODE_FORBIDDEN:
         log_e("Access Forbidden! DEVICE_ID not found or API_KEY not valid");
+
+        commands_setRelayOn("1", nullptr);
+        delay(3000);
+        yield();
+
+        commands_setRelayOff("1", nullptr);
+
         break;
       default:
         log_e("Unexpected code: %d", code);

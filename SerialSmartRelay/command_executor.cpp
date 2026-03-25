@@ -20,8 +20,6 @@
 
 #include <UFLogger.h>
 
-#include <Arduino.h>
-
 #ifdef ESP32
 #include <HTTPClient.h>
 #else
@@ -54,7 +52,7 @@ static UCommandExecutor commandExecutor(commands, sizeof(commands) / sizeof(comm
 
 void command_executor_handleCommandRequest(const HttpHeader* headers, size_t headersCount, CommandResultCallback onResultFunc) {
   char cmd[32] = { 0 };
-  char param[32] = { 0 };
+  char param[64] = { 0 };
 
   for (size_t i = 0; i < headersCount; i++) {
     const char* name = headers[i].name;

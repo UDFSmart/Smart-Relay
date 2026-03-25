@@ -18,10 +18,7 @@
 
 #include "string_utils.h"
 
-// #include <string.h>
-
-#include <stdlib.h> // Для strtoul, itoa и прочих системных штук
-#include <Arduino.h>
+#include <stdlib.h>
 
 void sanitizePath(char* s) {
   for (; *s; s++) {

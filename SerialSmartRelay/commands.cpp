@@ -17,22 +17,24 @@
  */
 
 #include "commands.h"
+#include "config.h"
 
 #include <ESP8266WiFi.h>
-#include "HardwareSerial.h"
-#include <cstdlib>
-#include <cstring>
+#include <SoftwareSerial.h>
+
+#include <SerialRelayController.h>
 
 #define COMMAND_RESULT_SIZE 128
-
 #define RELAY_RX 3  // GPIO3 (RX)
 #define RELAY_TX 1  // GPIO1 (TX)
 
-RelayController relay(RELAY_RX, RELAY_TX);
+SoftwareSerial _serial(RELAY_RX, RELAY_TX);
+SerialRelayController relay(_serial, RELAY_CHANNELS_COUNT);
 
 void commands_setup() {
-
+  _serial.begin(115200);
   relay.begin();
+  // relay.setOn(1);
 }
 
 // =======================
@@ -78,8 +80,13 @@ void commands_setHardReset(const char* param, CommandResultCallback callback) {
   cmdHardReset(result, COMMAND_RESULT_SIZE, param, callback);
 }
 
+void resetSerial() {
+  _serial.end();
+  _serial.begin(115200);
+}
+
 void commands_setupSerial(const char* param, CommandResultCallback callback) {
-  relay.begin();
+  resetSerial();
 
   if (callback) {
     callback(COMMAND_SERIAL_SETUP, param, "Successful");
@@ -89,13 +96,16 @@ void commands_setupSerial(const char* param, CommandResultCallback callback) {
 void commands_setRelayOn(const char* param, CommandResultCallback callback) {
   int channel = (param != NULL) ? atoi(param) : 0;
 
-  relay.begin(); // Sometimes the serial interface initialization is reset, this is the only thing that helps
+  if (NEED_SERIAL_RESET_BEFORE_ON_OFF)
+    resetSerial();
 
   if (channel == 0) {
-    relay.relayOn(1);
-    relay.relayOn(2);
+    uint8_t count = RELAY_CHANNELS_COUNT;  //relay.getChannelsCount();
+    for (uint8_t i = 0; i < count; i++) {
+      relay.setOn(i);
+    }
   } else {
-    relay.relayOn(channel);
+    relay.setOn(channel);
   }
 
   if (callback) {
@@ -104,18 +114,29 @@ void commands_setRelayOn(const char* param, CommandResultCallback callback) {
 }
 
 void commands_setRelayOff(const char* param, CommandResultCallback callback) {
-  int channel = (param != NULL) ? atoi(param) : 0;
+  uint8_t channel = (param != NULL) ? atoi(param) : 0;
 
-  relay.begin(); // Sometimes the serial interface initialization is reset, this is the only thing that helps
+  if (NEED_SERIAL_RESET_BEFORE_ON_OFF)
+    resetSerial();
 
   if (channel == 0) {
-    relay.relayOff(1);
-    relay.relayOff(2);
+    int count = RELAY_CHANNELS_COUNT;  // relay.getChannelsCount();
+    for (uint8_t i = 0; i < count; i++) {
+      relay.setOff(i);
+    }
   } else {
-    relay.relayOff(channel);
+    relay.setOff(channel);
   }
 
   if (callback) {
     callback(COMMAND_RELAY_OFF, param, "Successful");
   }
+}
+
+void commands_setRelayOn(int channel) {
+  relay.setOn(channel);
+}
+
+void commands_setRelayOff(int channel) {
+  relay.setOff(channel);
 }

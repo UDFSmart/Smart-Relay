@@ -21,8 +21,6 @@
 #include <time.h>
 #include <UCommandExecutor.h>
 
-#include "RelayController.h"
-
 // COMMAND LIST
 #define COMMAND_HARDRESET "HARDRESET"
 #define COMMAND_REBOOT "REBOOT"
@@ -45,3 +43,7 @@ void commands_setupSerial(const char* param, CommandResultCallback callback);
 void commands_setRelayOn(const char* param, CommandResultCallback callback);
 
 void commands_setRelayOff(const char* param, CommandResultCallback callback);
+
+void commands_setRelayOn(int channel);
+
+void commands_setRelayOff(int channel);
