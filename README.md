@@ -12,7 +12,7 @@ This repository contains a set of firmware for the esp-01/esp-01s, designed to w
 ## SUPPORTED DEVICES
 
   + ESP8266 ESP-01S Relay v{X.X}
-  + ESP8266 ESP-01 WIFI Wireless with {X}CH Relay Module Board
+  + [ESP8266 ESP-01 WIFI Wireless with {X}CH Relay Module Board](https://github.com/UDFSmart/Smart-Relay/blob/main/SerialSmartRelay/docs/README.md)
 
 ## EXTERNAL DEPENDENCIES
 
