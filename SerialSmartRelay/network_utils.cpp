@@ -181,7 +181,7 @@ void setupWifi() {
   wm.setConfigPortalTimeout(300);
 
   // If the connection fails, the configurator will start
-  if (!wm.autoConnect("SMART_CLOCK_AP", "12345678")) {
+  if (!wm.autoConnect(DEVICE_TYPE, WIFI_AP_PASSWORD)) {
     log_w("Failed to connect, rebooting...");
 
     delay(2000);

@@ -29,4 +29,6 @@
 #define RELAY_CHANNELS_COUNT 2                // The number of modular relay channels is set here.
 #define NEED_SERIAL_RESET_BEFORE_ON_OFF true  // Sometimes the module does not accept commands and only reinitializing the serial interface helps.
 
+#define WIFI_AP_PASSWORD "12345678"
+
 static const uint8_t customMAC[] = { 0xAC, 0x00, 0x00, 0x00, 0x00, 0x00 };  // If you don't have a default in your esp, then set your MAC
